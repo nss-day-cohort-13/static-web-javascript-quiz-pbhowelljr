@@ -29,20 +29,19 @@ var treeBuilder = function(specs) {
 	var character = specs.character;
 	var height = specs.height;
 	var middle=(height-1);
-
 	for (var i = 0; i < (((height-1)*2)+1); i++) {
-		treeArray.push(' ');
+		treeArray.push(' '.repeat(character.length));
 	}
 	
 	treeArray[(middle)] = character;
-	var treeArrayString = treeArray.join("").toString();
+	var treeArrayString = treeArray.join(" ").toString();
 	console.log(treeArrayString);
 	mainContent.innerHTML += ('<div>'+treeArrayString+'</div>');
 
 	for (var i = 0; i < middle; i++) {
 		treeArray[(middle+(i+1))] = specs.character;
 		treeArray[(middle-(i+1))] = specs.character;
-		var treeArrayString = treeArray.join("").toString();
+		treeArrayString = treeArray.join(" ").toString();
 		console.log(treeArrayString);
 		mainContent.innerHTML += ('<div>'+treeArrayString+'</div>');
 	}
