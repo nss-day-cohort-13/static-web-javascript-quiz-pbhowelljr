@@ -7,84 +7,93 @@ var characterInput = document.getElementById('characterInput');
 var submitButton = document.getElementById('submitButton');
 var clearButton = document.getElementById('clearButton');
 
-//OBJECT AND ARRAY FOR TREE VALUES
+
+//OBJECT AND ARRAY INIT FOR TREE VALUES
 var treeSpecs = {};
 var treeArray = [];
 
-//TAKES USER INPUT, CHECKS FOR BLANK INPUTS AND ASSIGNS VALUES TO KEY/VALUE PAIRS IN OBJECT
-var treeSpecBuilder = function() {
-	if((heightInput.value!=='') && (characterInput.value!=='')) {
-		treeSpecs.height = parseInt(heightInput.value);
-		treeSpecs.character = characterInput.value;
-		clear();
-		return treeSpecs;
-	} else {
-		alert("Both fields must have a value!");
-	}
-};
 
-//BUILDS TREE STRUCTURE BY ADDING 
-var treeBuilder = function(specs) {
-
-	var character = specs.character;
-	var height = specs.height;
-	var middle=(height-1);
-	for (var i = 0; i < (((height-1)*2)+1); i++) {
-		treeArray.push(' '.repeat(character.length));
-	}
-	
-	treeArray[(middle)] = character;
-	var treeArrayString = treeArray.join(" ").toString();
-	console.log(treeArrayString);
-	mainContent.innerHTML += ('<div>'+treeArrayString+'</div>');
-
-	for (var i = 0; i < middle; i++) {
-		treeArray[(middle+(i+1))] = specs.character;
-		treeArray[(middle-(i+1))] = specs.character;
-		treeArrayString = treeArray.join(" ").toString();
-		console.log(treeArrayString);
-		mainContent.innerHTML += ('<div>'+treeArrayString+'</div>');
-	}
-
-	treeArray = [];
-};
-
-//CLEARS MAIN CONTENT DIV AND INPUTS
+//CLEARS HTML MAIN CONTENT DIV AND INPUTS
 var clear = function () {
 	mainContent.innerHTML = "";
 	heightInput.value = "";
 	characterInput.value = "";
 };
 
-//CALLS TREE FUNCTIONS
-var runner = function() {
-	treeBuilder(treeSpecBuilder());
+
+//PRINTS FORMATTED ARRAY TO DOM AND CONSOLE
+var arrayPrinter = function(array, elem) {
+	var arrayString = array.join(" ").toString();
+	elem.innerHTML += ('<div>'+arrayString+'</div>');
+	console.log(arrayString);
 };
 
-var enterChecker = function() {
-	if ((keyPressed.which===13) || (keyPressed.keyCode==13)) {
+
+//RUNS RUNNER IF ENTER KEY WAS PRESSED INSIDE A TEXT INPUT
+var enterChecker = function(key) {
+	if ((key.which===13) || (key.keyCode==13)) {
 		runner();
 	}
 };
+
+
+//TAKES USER INPUT, CHECKS FOR BLANK INPUTS/
+//ASSIGNS INPUT VALUES TO KEY/VALUE PAIRS IN RETURNED OBJECT
+var treeSpecBuilder = function(object, height, character) {
+	if((height!=='') && (character!=='')) {
+		object.height = parseInt(height);
+		object.character = character;
+		clear();
+		return object;
+	} else {
+		alert("Both fields must have a value!");
+	}
+};
+
+
+//CREATES EMPTY ARRAY AND THEN BUILDS TREE LINE x LINE
+var treeBuilder = function(specs, array) {
+	var character = specs.character;
+	var height = specs.height;
+	var middle=(height-1);
+
+	for (var i = 0; i < (((height-1)*2)+1); i++) {
+		array.push(' '.repeat(character.length));
+	}
+
+	array[(middle)] = character;
+	arrayPrinter(array, mainContent);
+
+	for (var i = 0; i < middle; i++) {
+		array[(middle+(i+1))] = specs.character;
+		array[(middle-(i+1))] = specs.character;
+		arrayPrinter(array, mainContent);
+	}
+};
+
+
+//RUNS THE BUILD PROGRAM
+var runner = function() {
+	treeArray = [];
+	treeBuilder(treeSpecBuilder(treeSpecs, heightInput.value, characterInput.value), treeArray);
+};
+
 
 //BUTTON TEXT
 submitButton.innerHTML = "Grow your tree";
 clearButton.innerHTML = "Clear"
 
-//RUNS RUNNER FUNCTION WHEN SUBMIT BUTTON IS CLICKED
+
+//EVENT LISTENER FOR CLICKS ON SUBMIT BUTTON
 submitButton.addEventListener("click", runner, false);
-
-//RUNS RUNNER WHEN ENTER IS PRESSED IN TEXT BOXES
-heightInput.addEventListener("keypress", function(keyPressed) {
-	if ((keyPressed.which===13) || (keyPressed.keyCode==13)) {
-		runner();
-	}
-});
-characterInput.addEventListener("keypress", function(keyPressed) {
-	if ((keyPressed.which===13) || (keyPressed.keyCode==13)) {
-		runner();
-	}
-});
-
-//CALLS CLEAR FUNCTION WHEN CLEAR BUTTON IS CLICKED
 clearButton.addEventListener("click", clear, false);
+
+
+//EVENT LISTENERS FOR KEYS PRESSED IN TEXT BOXES
+heightInput.addEventListener("keypress", function(key) {
+	enterChecker(key);
+});
+
+characterInput.addEventListener("keypress", function(key) {
+	enterChecker(key);
+});
