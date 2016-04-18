@@ -1,0 +1,24 @@
+
+#mainContent {
+	margin: 50px auto;
+}
+
+#mainContent div {
+	text-align: center;
+	display: block;
+	font-size: 1.25em;
+	padding: 2.5px;
+	color: forestgreen;
+}
+
+#submitButton {
+	height: 60px;
+	width: 75px;
+	cursor: pointer;
+}
+
+#clearButton {
+	height: 25px;
+	width: 75px;
+	cursor: pointer;
+}
