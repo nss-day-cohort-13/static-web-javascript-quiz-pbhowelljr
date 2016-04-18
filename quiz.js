@@ -23,7 +23,7 @@ var clear = function () {
 
 //PRINTS FORMATTED ARRAY TO DOM AND CONSOLE
 var arrayPrinter = function(array, elem) {
-	var arrayString = array.join(" ").toString();
+	var arrayString = array.join("").toString();
 	elem.innerHTML += ('<div>'+arrayString+'</div>');
 	console.log(arrayString);
 };
