@@ -31,7 +31,7 @@ var arrayPrinter = function(array, elem) {
 
 //RUNS RUNNER IF ENTER KEY WAS PRESSED INSIDE A TEXT INPUT
 var enterChecker = function(key) {
-	if ((key.which===13) || (key.keyCode==13)) {
+	if ((key.which===13) || (key.keyCode===13)) {
 		runner();
 	}
 };
