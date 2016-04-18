@@ -55,7 +55,7 @@ var treeSpecBuilder = function(object, height, character) {
 var treeBuilder = function(specs, array) {
 	var character = specs.character;
 	var height = specs.height;
-	var middle=(height-1);
+	var middle=height-1;
 
 	for (var i = 0; i < (((height-1)*2)+1); i++) {
 		array.push(' '.repeat(character.length));
